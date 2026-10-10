@@ -9,7 +9,7 @@
         state: present
         update_cache: true
         cache_valid_time: 3600
-    - name: Ensure nginx is running and enabled at boot 
+    - name: Ensure nginx is running and enabled at boot
       ansible.builtin.service:
         name: nginx
         state: started
@@ -20,14 +20,14 @@
         shell: /bin/bash
         create_home: true
         state: present
-    - name: Add ops-lab directory
+    - name: Ensure /opt/ops-lab directory exists
       ansible.builtin.file:
         path: /opt/ops-lab
         state: directory
         owner: opsbot
         group: opsbot
         mode: "0755"
-    - name: Add homepage Deployed by Asible   
+    - name: Ensure homepage shows deploy message
       ansible.builtin.copy:
         dest: /var/www/html/index.html
         content: "Deployed by Ansible on {{ inventory_hostname }}\n"

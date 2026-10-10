@@ -20,3 +20,11 @@
         shell: /bin/bash
         create_home: true
         state: present
+    - name: Add ops-lab directory
+      ansible.builtin.file:
+        path: /opt/ops-lab
+        state: directory
+        owner: opsbot
+        group: opsbot
+        mode: "0755"
+

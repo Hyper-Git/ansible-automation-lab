@@ -27,4 +27,9 @@
         owner: opsbot
         group: opsbot
         mode: "0755"
+    - name: Add homepage Deployed by Asible   
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: "Deployed by Ansible on {{ inventory_hostname }}\n"
+        mode: "0644"
 

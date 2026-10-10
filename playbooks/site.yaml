@@ -14,4 +14,9 @@
         name: nginx
         state: started
         enabled: true
-
+    - name: Ensure opsbot user exists with a home directory
+      ansible.builtin.user:
+        name: opsbot
+        shell: /bin/bash
+        create_home: true
+        state: present

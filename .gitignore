@@ -3,3 +3,7 @@
 *.tfstate.*
 *.pem
 *.key
+*.tfvars
+!example.tfvars
+crash.log
+.vault-token

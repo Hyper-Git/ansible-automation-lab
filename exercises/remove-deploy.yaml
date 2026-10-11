@@ -1,0 +1,20 @@
+---
+- name: Remove user deploy and /opt/app directory
+  hosts: localhost
+  become: true
+
+  tasks:
+  - name: Directory /opt/app is absent
+    ansible.builtin.file:
+      path: /opt/app
+      state: absent
+
+  - name: User deploy is absent
+    ansible.builtin.user:
+      name: deploy
+      state: absent
+      remove: true
+
+
+
+

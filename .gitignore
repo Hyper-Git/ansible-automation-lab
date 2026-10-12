@@ -7,3 +7,4 @@
 !example.tfvars
 crash.log
 .vault-token
+tfplan

@@ -2,10 +2,7 @@
 - name: Configure Web Servers
   hosts: webservers
   become: true
-  vars:
-    web_package: nginx
-    ops_user: opsbot
-    ops_dir: /opt/ops-lab
+  
   tasks:
     - name: Ensure nginx is installed
       ansible.builtin.apt:

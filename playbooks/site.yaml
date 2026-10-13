@@ -30,6 +30,6 @@
     - name: Ensure homepage shows deploy message
       ansible.builtin.copy:
         dest: /var/www/html/index.html
-        content: "Deployed by Ansible on {{ inventory_hostname }}\n"
+        content: "Deployed by Ansible on {{ inventory_hostname }}-v2\n"
         mode: "0644"
 

@@ -33,4 +33,16 @@
         dest: /var/www/html/index.html
         content: "Deployed by Ansible on {{ inventory_hostname }}-v2\n"
         mode: "0644"
+    - name: Ensure nginx hides its version number
+      ansible.builtin.lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: '^\s*server_tokens'
+        line: "\tserver_tokens off;"
+        validate: "nginx -t -c %s"
+      notify: Reload nginx
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: "{{ web_package }}"
+        state: reloaded
 

@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for webserver
+
+- name: Reload nginx
+  ansible.builtin.service:
+    name: "{{ web_package }}"
+    state: reloaded

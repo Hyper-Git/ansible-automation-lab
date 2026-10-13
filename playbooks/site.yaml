@@ -2,30 +2,34 @@
 - name: Configure Web Servers
   hosts: webservers
   become: true
+  vars:
+    web_package: nginx
+    ops_user: opsbot
+    ops_dir: /opt/ops-lab
   tasks:
     - name: Ensure nginx is installed
       ansible.builtin.apt:
-        name: nginx
+        name: "{{ web_package }}"
         state: present
         update_cache: true
         cache_valid_time: 3600
     - name: Ensure nginx is running and enabled at boot
       ansible.builtin.service:
-        name: nginx
+        name: "{{ web_package }}"
         state: started
         enabled: true
     - name: Ensure opsbot user exists with a home directory
       ansible.builtin.user:
-        name: opsbot
+        name: "{{ ops_user }}"
         shell: /bin/bash
         create_home: true
         state: present
     - name: Ensure /opt/ops-lab directory exists
       ansible.builtin.file:
-        path: /opt/ops-lab
+        path: "{{ ops_dir }}"
         state: directory
-        owner: opsbot
-        group: opsbot
+        owner: "{{ ops_user }}"
+        group: "{{ ops_user }}"
         mode: "0755"
     - name: Ensure homepage shows deploy message
       ansible.builtin.copy:

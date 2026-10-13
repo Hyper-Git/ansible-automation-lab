@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = {
-    Name       = "main"
+    Name       = "ansible-lab-vpc"
     Managed_by = "Terraform"
   }
 }
@@ -48,7 +48,7 @@ resource "aws_security_group" "server" {
 }
 
 #SSH from my IP only
-resource "aws_vpc_security_group_ingress_rule" "ssh-from-my-ip" {
+resource "aws_vpc_security_group_ingress_rule" "ssh_from_my_ip" {
   security_group_id = aws_security_group.server.id
   cidr_ipv4         = var.my_ip
   from_port         = 22
@@ -96,7 +96,7 @@ resource "aws_key_pair" "lab" {
 
 }
 
-resource "aws_instance" "web-01" {
+resource "aws_instance" "web_01" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public.id
@@ -104,6 +104,6 @@ resource "aws_instance" "web-01" {
   key_name               = aws_key_pair.lab.key_name
 
   tags = {
-    Name = "ansible-control"
+    Name = "web-01"
   }
 }

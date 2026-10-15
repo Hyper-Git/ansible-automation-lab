@@ -1,4 +1,0 @@
----
-web_package: nginx
-ops_user: opsbot
-ops_dir: /opt/ops-lab

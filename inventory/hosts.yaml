@@ -6,7 +6,7 @@ all:
           ansible_connection: local
           ansible_become_exe: sudo.ws
     aws:
-      hosts: 
+      hosts:
         web-01:
           ansible_host: "13.135.103.69"
           ansible_user: ubuntu

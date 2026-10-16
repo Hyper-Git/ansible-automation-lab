@@ -1,38 +1,46 @@
-Role Name
-=========
+# webserver role
 
-A brief description of the role goes here.
+Installs and configures nginx on Ubuntu, creates a service user and working directory, deploys a simple homepage and hides the nginx version from response headers.
 
-Requirements
-------------
+## What it does
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. Installs nginx (apt cache refreshed only if older than one hour)
+2. Ensures nginx is running and enabled at boot
+3. Ensures the service user exists, with a bash shell and a home directory
+4. Ensures the working directory exists, owned by the service user, mode `0755`
+5. Writes `/var/www/html/index.html` showing which host was configured
+6. Sets `server_tokens off` in `/etc/nginx/nginx.conf` with `lineinfile`, validated with `nginx -t` before the file is written
+7. Reloads nginx through a handler, only when the config changed
 
-Role Variables
---------------
+## Requirements
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- Ubuntu target (uses `apt`)
+- Privilege escalation (`become: true`)
 
-Dependencies
-------------
+## Role variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Defined in `defaults/main.yml`, so they can be overridden from inventory or the playbook:
 
-Example Playbook
-----------------
+| Variable | Default | Purpose |
+|---|---|---|
+| `web_package` | `nginx` | Package and service name |
+| `ops_user` | `opsbot` | Service user |
+| `ops_dir` | `/opt/ops-lab` | Working directory owned by `ops_user` |
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Handlers
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- `Reload nginx`: reloads the service when notified
 
-License
--------
+## Example playbook
 
-BSD
+```yaml
+- name: Configure Web Servers
+  hosts: webservers
+  become: true
+  roles:
+    - webserver
+```
 
-Author Information
-------------------
+## Author
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Cornel Bacanu. Part of [ansible-automation-lab](../../README.md).

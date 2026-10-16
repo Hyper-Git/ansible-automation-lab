@@ -2,3 +2,4 @@
 path "secret/data/webapp" {
   capabilities = ["read"]
 }
+

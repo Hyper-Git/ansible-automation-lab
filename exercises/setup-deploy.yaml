@@ -9,7 +9,7 @@
         name: deploy
         state: present
 
-    - name: /opt/app directory exists owned by deploy 
+    - name: /opt/app directory exists owned by deploy
       ansible.builtin.file:
         path: /opt/app
         owner: deploy
